@@ -45,7 +45,6 @@
   border-radius: 10px;
 }
 
-.music {}
 
 .persons {
   background-color: coral;
@@ -54,5 +53,13 @@
   border-radius: 10px;
   border: 2px solid red;
   margin: 10px;
+  font-size: 16px;
+}
+
+.counter button {
+  padding: 10px 20px;
+  margin: 0px 10px;
+  background-color: powderblue;
+  font-weight: 400;
   font-size: 16px;
 }
