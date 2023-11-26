@@ -36,15 +36,20 @@ function App() {
             persons.map(per => <Person name={per}></Person>)
           }
 
-          <div className="counter">
-            <Counter></Counter>
-          </div>
-
-          <div className="extUsers">
-            <ExternalUsers></ExternalUsers>
-          </div>
-
         </div>
+
+        <div className="counter">
+          <Counter></Counter>
+        </div>
+
+        <div className="extUsers">
+          <ExternalUsers></ExternalUsers>
+        </div>
+
+        <div className="coutries">
+          <LoadCountries></LoadCountries>
+        </div>
+
 
       </header>
     </div>
@@ -97,4 +102,23 @@ function User(props) {
     </div>
   )
 }
+
+function LoadCountries() {
+  const [countries, setCountries] = useState([]);
+
+  useEffect(() => {
+    fetch('https://restcountries.com/v3.1/all')
+      .then(res => res.json())
+      .then(data => setCountries(data))
+  }, []);
+
+  return (
+    <div>
+      <h1>Visiting Every country in the world!!</h1>
+      <h3>{countries.length}</h3>
+    </div>
+  )
+}
+
+
 export default App;
