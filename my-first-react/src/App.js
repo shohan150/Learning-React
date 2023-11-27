@@ -1,6 +1,6 @@
 import './App.css';
 import React, { useEffect, useState } from 'react';
-import Countries from './components/Country/Countries';
+import Countries from './components/Countries/Countries';
 
 const number = 66;
 const singer = {
@@ -46,7 +46,7 @@ function App() {
           <ExternalUsers></ExternalUsers>
         </div>
 
-        <div className="from-compoents">
+        <div className="from-components">
           <Countries></Countries>
         </div>
 
