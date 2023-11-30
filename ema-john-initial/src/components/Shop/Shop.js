@@ -6,6 +6,7 @@ import Cart from '../Cart/Cart';
 //Product component used with products state
 import Product from '../Product/Product';
 import './Shop.css';
+import { useLoaderData } from 'react-router-dom';
 
 //ekhane ektu kechal ache. 
 //Kono product er add to cart button e click korle, first e cart e calculation dekhabe/entry nibe. Tarpor local storage e add hobe. Mane button click korle ekta function er moddhome cart e add + ctorage update hocche na. Refresh deyar somoy, useEffect diye deta jemon fetch kora hoi, sevabe e loca storage theke data niye cart update kore fele. R 2nd useEffect e extra feature ache. main products data(products.json) kokhono change hle, cart k abar load korbe ebong chack korbe j data gulo age chilo, sob gulor id thik ache kina, thakle abar quantity entry niye, notun kore cart k update korbe. 
@@ -13,14 +14,16 @@ import './Shop.css';
 //N.B: 2 ta state declare kore hoyeche. 2 tai 2 ta component e pathano hoyeche. Ebar bujhteso state keno use kora hoi? Jate ei state e kono change ba update hle, related component tai update hoi.
 
 const Shop = () => {
-    const [products, setProducts] = useState([]);
+    // const [products, setProducts] = useState([]);
+    const products = useLoaderData();
+    //updates code. products e to actually state lagche na. karon products user change korbe na. user interaction e cart update hobe. tai cart e state lagbe. sejonno products k directly load kore neya jai. More in loaders folder.
     const [cart, setCart] = useState([]);
 
-    useEffect(() => {
-        fetch('products.json')
-            .then(res => res.json())
-            .then(data => setProducts(data))
-    }, []);
+    // useEffect(() => {
+    //     fetch('products.json')
+    //         .then(res => res.json())
+    //         .then(data => setProducts(data))
+    // }, []);
 
     useEffect(() => {
         const storedCart = getStoredCart();
