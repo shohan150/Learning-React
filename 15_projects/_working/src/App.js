@@ -1,20 +1,16 @@
-import React, { useState } from 'react';
-import data from './data';
-import List from './List';
+import logo from './logo.svg';
+import './App.css';
+import React, { useEffect, useState } from 'react';
+
 
 function App() {
-  const [people, setPeople] = useState(data);
-
   return (
-    <main>
-      <section className="container">
-        <h3>{typeof people}</h3>
-        <List people={people}></List>
+    <div className="App">
+      <header className="App-header">
 
-        <button>Clear all</button>
-      </section>
-    </main>
-  )
+      </header>
+    </div>
+  );
 }
 
 export default App;
