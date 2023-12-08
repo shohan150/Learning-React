@@ -22,6 +22,7 @@ const Home = () => {
 
     const handleRemoveItem = tshirt => {
         const remaining = cart.filter(ts => ts._id !== tshirt._id);
+        // uses the filter method to create a new array (remaining) that includes only the elements from the original cart array where the _id is not equal to the _id of the specified tshirt. This effectively removes the specified tshirt from the array. setCart(remaining) This updates the state variable cart with the newly filtered array, effectively removing the specified tshirt from the cart.
         setCart(remaining);
     }
 

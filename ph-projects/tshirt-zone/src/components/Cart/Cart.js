@@ -4,25 +4,30 @@ import './Cart.css';
 
 const Cart = ({ cart, handleRemoveItem }) => {
 
+    //3 methods of conditional rerendering are shown here.
     let message;
-    if(cart.length === 0) {
+    //first type 
+    if (cart.length === 0) {
         message = <p>Please buy at least one item !!!</p>
     }
-    else if (cart.length === 1){
+    else if (cart.length === 1) {
         message = <div>
             <h3>Amar jonno ekta nao</h3>
             <p>tomar nijer jonno ekta</p>
             <p><small>amar jonno arekta nao, Please</small></p>
         </div>
-    } 
-    else{
+    }
+    else {
         message = <p>Thanks for buying!</p>
     }
 
     return (
         <div>
-            <h3 className={cart.length ===2 ? `orange` : 'purple'}>Order Summary</h3>
-            <h5 className={`bold ${cart.length ===2 ? 'blue':'yellow' }`}>Order quantity: {cart.length}</h5>
+            {/* 2nd type  */}
+            <h3 className={cart.length === 2 ? `orange` : 'purple'}>Order Summary</h3>
+            cause these are not actually html elements. h3, p, h5 are actually modules
+            {/* 3rd type */}
+            <h5 className={`bold ${cart.length === 2 ? 'blue' : 'yellow'}`}>Order quantity: {cart.length}</h5>
             {
                 cart.map(tshirt => <p
                     key={tshirt._id}
