@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 //to store and retrieve cart data
-import { addToDb, getStoredCart } from '../../utilities/fakedb';
+import { addToDb, deleteShoppingCart, getStoredCart } from '../../utilities/fakedb';
 //Cart component used with cart state
 import Cart from '../Cart/Cart';
 //Product component used with products state
 import Product from '../Product/Product';
 import './Shop.css';
-import { useLoaderData } from 'react-router-dom';
+import { Link, useLoaderData } from 'react-router-dom';
 
 //ekhane ektu kechal ache. 
 //Kono product er add to cart button e click korle, first e cart e calculation dekhabe/entry nibe. Tarpor local storage e add hobe. Mane button click korle ekta function er moddhome cart e add + ctorage update hocche na. Refresh deyar somoy, useEffect diye deta jemon fetch kora hoi, sevabe e loca storage theke data niye cart update kore fele. R 2nd useEffect e extra feature ache. main products data(products.json) kokhono change hle, cart k abar load korbe ebong chack korbe j data gulo age chilo, sob gulor id thik ache kina, thakle abar quantity entry niye, notun kore cart k update korbe. 
@@ -16,7 +16,9 @@ import { useLoaderData } from 'react-router-dom';
 const Shop = () => {
     // const [products, setProducts] = useState([]);
     const products = useLoaderData();
+    // console.log(products);
     //updates code. products e to actually state lagche na. karon products user change korbe na. user interaction e cart update hobe. tai cart e state lagbe. sejonno products k directly load kore neya jai. More in loaders folder.
+
     const [cart, setCart] = useState([]);
 
     // useEffect(() => {
@@ -25,9 +27,17 @@ const Shop = () => {
     //         .then(data => setProducts(data))
     // }, []);
 
+    const clearCart = () => {
+        setCart([]);
+        deleteShoppingCart();
+    }
+
+    //we get an onject from getStoredCart. But we are not going to modify that object directly. we will store it in a state named 'cart'. The reason to convert it from object to array data type is may be because it is easier to work with array data type (may be). 
     useEffect(() => {
         const storedCart = getStoredCart();
         const savedCart = [];
+        //console.log(storedCart);
+        //check if the product that was in the cart before, does that product even exist in the database now.
         for (const id in storedCart) {
             const addedProduct = products.find(product => product.id === id);
             if (addedProduct) {
@@ -37,6 +47,7 @@ const Shop = () => {
             }
         }
         setCart(savedCart);
+        //console.log(savedCart);
     }, [products])
 
 
@@ -45,10 +56,12 @@ const Shop = () => {
     const handleAddToCart = (selectedProduct) => {
         let newCart = [];
         const exists = cart.find(product => product.id === selectedProduct.id);
+        //if the product is new to the cart, make it's quantity 1.
         if (!exists) {
             selectedProduct.quantity = 1;
             newCart = [...cart, selectedProduct];
         }
+        //if the peoduct exists in the cart from before, increase it's quantity.
         else {
             exists.quantity++;
             const rest = cart.filter(product => product.id !== selectedProduct.id);
@@ -57,6 +70,7 @@ const Shop = () => {
 
         setCart(newCart);
         addToDb(selectedProduct.id);
+
     }
 
     return (
@@ -71,7 +85,11 @@ const Shop = () => {
                 }
             </div>
             <div className="cart-container">
-                <Cart cart={cart}></Cart>
+                <Cart cart={cart} clearCart={clearCart}>
+                    <Link to="/orders">
+                        <button>Review Order</button>
+                    </Link>
+                </Cart>
             </div>
         </div>
     );

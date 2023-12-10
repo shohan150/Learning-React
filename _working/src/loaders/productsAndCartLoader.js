@@ -24,9 +24,7 @@ export const productsAndCartLoader = async () => {
    // return { products: products, initialCart:initialCart }; duitar kaj same.
 };
 
-//first state, products e sudhu data fetch kore e dekhano jai. karon oi data use kore kothao show e kora hocche na. tai .json() apply kore json e convert kora lage na. vitore vitore stirng data er sathe comparison kore, calculation kore fele. kintu cart e to data show korte hobe. r data show korar jonno protita data k aladavabde access korte hobe. tai .json() apply kore data access korte hoi!(still my concept is not clear about this).
-
-//`JSON.stringify()` is used to convert a JavaScript object to a JSON string, `JSON.parse()` is used to parse a JSON string into a JavaScript object, and `.json()` is used in the Fetch API to extract JSON content from a response.
+//in Shop.js when useLoaderData is used the data is received after appling .json(). So, no need to perform .json() seperately. But here, useLoaderData is not used. That's why thata received data is to be converted to json format using .json().
 
 //.json() is used to extract the JSON content from the response obtained from the API.It parses the response body as JSON and returns a JavaScript object representing the parsed JSON content.
 
