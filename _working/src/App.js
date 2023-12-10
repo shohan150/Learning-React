@@ -1,69 +1,55 @@
 import './App.css';
-import React, { useEffect, useState } from 'react';
-import { GithubAuthProvider, GoogleAuthProvider, getAuth, signInWithPopup, signOut } from 'firebase/auth';
-import app from './firebase/firebase.init';
-
-
-const auth = getAuth(app);
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import Main from './layout/Main';
+import About from './components/About/About';
+import Shop from './components/Shop/Shop';
+import Orders from './components/Orders/Orders';
+import Inventory from './components/Inventory/Inventory';
+import { productsAndCartLoader } from './loaders/productsAndCartLoader';
 
 function App() {
-  const [user, setUser] = useState({});
-  const provider = new GoogleAuthProvider();
-  const gitProvider = new GithubAuthProvider();
+  const router = createBrowserRouter([
+    {
+      path: '/',
+      element: <Main></Main>,
+      children: [
+        {
+          path: '/',
+          loader: () => {
+            return fetch('products.json')
+          },
+          element: <Shop></Shop>
+        },
+        {
+          path: 'shop',
+          loader: () => {
+            return fetch('products.json')
+          },
+          element: <Shop></Shop>
+        },
+        {
+          path: 'orders',
+          // loader: () => {
+          //   return fetch('products.json')
+          // },
+          loader: productsAndCartLoader,
+          element: <Orders></Orders>
+        },
+        {
+          path: 'inventory',
+          element: <Inventory></Inventory>
+        },
+        {
+          path: 'about',
+          element: <About></About>
+        }
+      ]
+    }
 
-  const handleGoogleSignIn = () => {
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        const user = result.user;
-        setUser(user);
-        // console.log(user);
-      })
-      .catch(error => {
-        console.log('Error: ', error);
-      })
-  }
-  const handleGoogleSignOut = () => {
-    signOut(auth)
-      .then(() => {
-        setUser({});
-        console.log('Sign-out successful');
-      })
-      .catch(error => {
-        setUser({});
-        console.log('Error: ', error);
-      })
-  }
-
-  const handleGitHubSignIn = () => {
-    signInWithPopup(auth, gitProvider)
-      .then((result) => {
-        const user = result.user;
-        setUser(user);
-        console.log(user);
-      })
-      .catch(error => {
-        console.log('Error: ', error);
-      })
-  }
-
+  ])
   return (
-    <div className="App">
-      {
-        user.uid ?
-          <button onClick={handleGoogleSignOut}><h3>sign out</h3></button>
-          :
-          <>
-            <button onClick={handleGoogleSignIn}><h3>Google sign in</h3></button>
-            <button onClick={handleGitHubSignIn}><h3>GitHub sign in</h3></button>
-          </>
-      }
-      {
-
-        user.uid && <div>
-          <h3>User name : {user.displayName}</h3>
-          <p>Email Address : {user.email}</p>
-        </div>
-      }
+    <div>
+      <RouterProvider router={router}></RouterProvider>
     </div>
   );
 }
