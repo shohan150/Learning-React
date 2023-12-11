@@ -1,9 +1,15 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import './Signup.css'
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../context/UserContext';
+
+
 
 const Signup = () => {
    const [error, setError] = useState(null);
+   const { createUser } = useContext(AuthContext);
+
+
    const handleSubmit = (event) => {
       event.preventDefault();
       const form = event.target;
@@ -20,10 +26,18 @@ const Signup = () => {
          setError('Your password did not match');
          return;
       }
-      if (password == confirm) {
+      if (password === confirm) {
          setError('');
          return;
       }
+
+      createUser(email, password)
+         .then(result => {
+            const user = result.user;
+            console.log(user);
+            form.reset();
+         })
+         .catch(error => console.error(error));
    }
 
    return (
