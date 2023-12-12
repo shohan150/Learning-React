@@ -16,7 +16,7 @@ const Signup = () => {
       const email = form.email.value;
       const password = form.password.value;
       const confirm = form.confirm.value;
-
+      console.log(email, password);
       if (password.length < 6) {
          setError('Your password should have at least 6 characters');
          return;
@@ -28,7 +28,6 @@ const Signup = () => {
       }
       if (password === confirm) {
          setError('');
-         return;
       }
 
       createUser(email, password)
@@ -43,7 +42,7 @@ const Signup = () => {
    return (
       <div>
          <div className='form-container'>
-            <h2 className='form-title'>Login</h2>
+            <h2 className='form-title'>Sign Up</h2>
             <form onSubmit={handleSubmit}>
                <div className="form-control">
                   <label htmlFor="email">Email</label>
