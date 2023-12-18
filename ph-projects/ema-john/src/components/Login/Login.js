@@ -21,7 +21,7 @@ const Login = () => {
          .then(result => {
             const user = result.user;
             console.log(user);
-            form.reset();
+            // form.reset();
             // navigate('\'); dile homepage e niye jabe. kintu evabe korle jeta hocche, ami jodi private kono page e dhukte jai, tokhon login chai, login kori, tokhon oi page e na theke, login howar por homepage e niye chole jabe. kintu amra chacchi j j page e login form aschilo oi page ei thakbe login er por. sejonno 
             navigate(from, { replace: true })
          })

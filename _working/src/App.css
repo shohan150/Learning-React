@@ -37,10 +37,3 @@
     transform: rotate(360deg);
   }
 }
-
-button {
-  padding: 4px 8px;
-  margin: 0px 10px;
-  font-size: 16px;
-  font-weight: 500;
-}
