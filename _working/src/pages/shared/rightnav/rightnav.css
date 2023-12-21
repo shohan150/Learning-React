@@ -1,0 +1,10 @@
+.has-bg-img {
+   background-image: url("../../../assets/bg1.png");
+   height: aut0;
+   background-position: center;
+   background-repeat: no-repeat;
+   background-size: cover;
+   color: white;
+   padding: 70px 40px;
+   text-align: center;
+}
