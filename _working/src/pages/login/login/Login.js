@@ -8,7 +8,8 @@ const Login = () => {
    const { signIn } = useContext(AuthContext);
    const navigate = useNavigate();
    const location = useLocation();
-   console.log('login page location', location)
+   console.log('login page location', location);
+   //sudhu privateroute theke login page e pathale  state e value asbe. r public page jemon home, category theke login e gele state e kono value thakbe na.
    const from = location.state?.from?.pathname || '/category/0'
 
    const handleLogin = event => {
