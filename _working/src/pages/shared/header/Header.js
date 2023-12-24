@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import logo from '../../../assets/logo.png';
 import moment from 'moment';
 import { Button, Container, Navbar, Nav } from 'react-bootstrap';
 import Marquee from "react-fast-marquee";
+import { Link } from 'react-router-dom';
+import { AuthContext } from '../../../providers/AuthProvider';
+import { FaUserCircle } from 'react-icons/fa';
 
 const Header = () => {
+
+   const { user } = useContext(AuthContext);
+
    return (
       <Container>
          <div className="text-center">
@@ -20,7 +26,7 @@ const Header = () => {
             </Marquee>
          </div>
 
-         <Navbar expand="lg" className="bg-body-tertiary">
+         {/* <Navbar expand="lg" className="bg-body-tertiary">
             <Container fluid>
                <Navbar.Toggle aria-controls="navbarScroll" />
                <Navbar.Collapse id="navbarScroll">
@@ -29,16 +35,31 @@ const Header = () => {
                      style={{ maxHeight: '100px' }}
                      navbarScroll
                   >
-                     <Nav.Link href="#action1">Home</Nav.Link>
+                     <Nav.Link href="#action1">
+                        <Link to='/'>Home</Link>
+                     </Nav.Link>
                      <Nav.Link href="#action2">About</Nav.Link>
                      <Nav.Link href="#action2">Career</Nav.Link>
                   </Nav>
 
-                  <Button variant="secondary">Login</Button>
+                  <Nav>
+                     {
+                        user && <Nav.Link href='#deets'><FaUserCircle style={{ fontSize: '2rem' }}></FaUserCircle></Nav.Link>
+                     }
+
+                     <Nav.Link eventKey={2} href='#memes'>
+                        {
+                           user ?
+                              <Button variant="secondary">Log out</Button> :
+                              <Link to='/login'>
+                                 <Button variant="secondary">Login</Button>
+                              </Link>}
+                     </Nav.Link>
+                  </Nav>
 
                </Navbar.Collapse>
             </Container>
-         </Navbar >
+         </Navbar > */}
 
       </Container >
    );
