@@ -123,6 +123,9 @@ function App() {
         <div className="todo-list">
           {isCompletedScreen &&
             allTodos.map((item, index) => (
+
+              //The map function in JavaScript passes three arguments to the callback function for each element in the array being processed. These arguments are: 1. currentValue: The current element being processed in the array. 2. index: The index of the current element being processed. 3. array: The array on which map was called.
+
               <div className="todo-list-item" key={index}>
                 <div>
                   <h3>{item.title}</h3>
