@@ -1,9 +1,9 @@
 import './App.css';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import notes from './images/notes.png';
 import Header from './components/header/Header';
-import Task from './components/task/Task';
 import Footer from './components/footer/Footer';
+import Task from './components/task/Task';
 
 
 
@@ -11,11 +11,15 @@ function App() {
 
   const [todos, setTodos] = useState([]);
   const [newTodo, setNewTodo] = useState('');
+  const [stage, setStage] = useState('all');
+  const [type, setType] = useState('green');
 
-  const addTodo = () => {
+
+  const addTodo = (e) => {
+    e.preventDefault();
     if (newTodo.trim() === '') return;
 
-    setTodos([...todos, { id: Date.now(), text: newTodo }]);
+    setTodos([...todos, { id: Date.now(), text: newTodo, completion: false, type: 'green' }]);
     setNewTodo('');
   };
 
@@ -23,7 +27,7 @@ function App() {
     setTodos(todos.filter(todo => todo.id !== todoId));
   };
 
-  console.log(todos);
+
   return (
     <>
       <div
@@ -34,7 +38,7 @@ function App() {
           <div>
             <div>
               <form
-                className="flex items-center bg-gray-100 px-4 py-4 rounded-md"
+                className="flex items-center bg-gray-100 px-4 py-4 rounded-md" onSubmit={addTodo}
               >
                 <img
                   src={notes}
@@ -48,41 +52,27 @@ function App() {
                 />
                 <button
                   type="submit"
-                  className="appearance-none w-8 h-8 bg-[url('./images/plus.png')] bg-no-repeat bg-contain" onClick={addTodo}
+                  className="appearance-none w-8 h-8 bg-[url('./images/plus.png')] bg-no-repeat bg-contain"
                 ></button>
               </form>
             </div>
-            <Header></Header>
+
+            <Header todos={todos} setTodos={setTodos}></Header>
           </div>
           <hr className="mt-4" />
 
-          <Task></Task>
+          {
+            todos.map((todo) => (
+              < Task key={todo.id} todos={todos} todo={todo} setTodos={setTodos} removeTodo={removeTodo} stage={stage} ></Task>
+
+            ))}
+
 
           <hr className="mt-4" />
-          <Footer></Footer>
+          <Footer todos={todos} stage={stage} setStage={setStage} type={type} setType={setType} setTodos={setTodos}></Footer>
 
         </div>
-      </div>
-
-      {/* //////////////////////////////// */}
-
-      <div>
-        <input
-          type="text"
-          value={newTodo}
-          onChange={(e) => setNewTodo(e.target.value)}
-          placeholder="Add a new todo"
-        />
-        <button onClick={addTodo}>Add</button>
-      </div>
-      <ul>
-        {todos.map((todo) => (
-          <li key={todo.id}>
-            {todo.text}
-            <button onClick={() => removeTodo(todo.id)}>Remove</button>
-          </li>
-        ))}
-      </ul>
+      </div >
     </>
 
   );

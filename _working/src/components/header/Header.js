@@ -1,7 +1,23 @@
 import React from 'react';
 import doubleTick from '../../images/double-tick.png';
 
-const Header = () => {
+const Header = ({ todos, setTodos }) => {
+
+   const completeAll = () => {
+      let updatedTodos = todos.map((todo) => ({
+         ...todo,
+         completion: true,
+      }));
+      setTodos(updatedTodos);
+      // console.log(todos);
+   }
+
+   const clearCompleted = () => {
+      let updatedTodos = todos.filter((todo) => !todo.completion);
+      setTodos(updatedTodos);
+      // console.log(todos);
+   }
+
    return (
       <div>
          <ul className="flex justify-between my-4 text-xs text-gray-500">
@@ -11,9 +27,9 @@ const Header = () => {
                   src={doubleTick}
                   alt="Complete"
                />
-               <span>Complete All Tasks</span>
+               <span onClick={completeAll}>Complete All Tasks</span>
             </li>
-            <li className="cursor-pointer">Clear completed</li>
+            <li className="cursor-pointer" onClick={clearCompleted}>Clear completed</li>
          </ul>
       </div >
    );
