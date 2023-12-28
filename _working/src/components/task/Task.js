@@ -1,9 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import cancel from '../../images/cancel.png';
 
-const Task = ({ todo, removeTodo, stage }) => {
-   const [completion, setCompletion] = useState(todo.completion);
+const Task = ({ todo, removeTodo, completion, type, completeAll, clearCompleted, setClearCompleted }) => {
+   const [taskCompletion, setTaskCompletion] = useState('incomp');
    const [taskType, setTaskType] = useState('green');
+
+   useEffect(() => {
+      if (completeAll) {
+         setClearCompleted(false);
+         setTaskCompletion('comp');
+      }
+   }, [completeAll, setClearCompleted]);
+
+   useEffect(() => {
+      if (clearCompleted && taskCompletion === 'comp') {
+         removeTodo(todo.id);
+      }
+   }, [clearCompleted, removeTodo, taskCompletion, todo.id]);
+
+
+   if (!(completion === 'all' && type === 'all')) {
+      if (completion === 'comp') {
+         if (!(taskCompletion === 'comp')) return;
+      }
+      if (completion === 'incomp') {
+         if (!(taskCompletion === 'incomp')) return;
+      }
+      if (type === 'green') {
+         if (!(taskType === 'green')) return;
+      }
+      if (type === 'red') {
+         if (!(taskType === 'red')) return;
+      }
+      if (type === 'yellow') {
+         if (!(taskType === 'yellow')) return;
+      }
+   }
 
    return (
       <>
@@ -19,30 +51,30 @@ const Task = ({ todo, removeTodo, stage }) => {
                >
                   <input
                      type="checkbox"
-                     className="opacity-0 absolute rounded-full" onClick={() => { setCompletion(true); todo.completion = true }}
+                     className="opacity-0 absolute rounded-full" onClick={() => { setTaskCompletion('comp'); setClearCompleted(false); }}
                   />
                   <svg
-                     className={`fill-current w-3 h-3 text-green-500 pointer-events-none ${!completion && 'hidden'}`}
+                     className={`fill-current w-3 h-3 text-green-500 pointer-events-none ${taskCompletion === 'incomp' && 'hidden'}`}
                      viewBox="0 0 20 20"
                   >
                      <path d="M0 11l2-2 5 5L18 3l2 2L7 18z" />
                   </svg>
                </div>
 
-               <div className={`select-none flex-1 ${completion && 'line-through'}`}>
+               <div className={`select-none flex-1 ${taskCompletion === 'comp' && 'line-through'}`}>
                   {todo.text}
                </div>
 
                <div
-                  className={`flex-shrink-0 h-4 w-4 rounded-full border-2 ml-auto cursor-pointer border-green-500 hover:bg-green-500 ${taskType === 'green' && 'bg-green-500'}`} onClick={() => { setTaskType('green'); todo.type = 'green' }}
+                  className={`flex-shrink-0 h-4 w-4 rounded-full border-2 ml-auto cursor-pointer border-green-500 hover:bg-green-500 ${taskType === 'green' && 'bg-green-500'}`} onClick={() => { setTaskType('green'); }}
                ></div>
 
                <div
-                  className={`flex-shrink-0 h-4 w-4 rounded-full border-2 ml-auto cursor-pointer border-yellow-500 hover:bg-yellow-500 ${taskType === 'yellow' && 'bg-yellow-500'}`} onClick={() => { setTaskType('yellow'); todo.type = 'yellow' }}
+                  className={`flex-shrink-0 h-4 w-4 rounded-full border-2 ml-auto cursor-pointer border-yellow-500 hover:bg-yellow-500 ${taskType === 'yellow' && 'bg-yellow-500'}`} onClick={() => { setTaskType('yellow'); }}
                ></div>
 
                <div
-                  className={`flex-shrink-0 h-4 w-4 rounded-full border-2 ml-auto cursor-pointer border-red-500 hover:bg-red-500 ${taskType === 'red' && 'bg-red-500'}`} onClick={() => { setTaskType('red'); todo.type = 'red' }}
+                  className={`flex-shrink-0 h-4 w-4 rounded-full border-2 ml-auto cursor-pointer border-red-500 hover:bg-red-500 ${taskType === 'red' && 'bg-red-500'}`} onClick={() => { setTaskType('red'); }}
                ></div>
 
                <img

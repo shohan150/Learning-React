@@ -1,8 +1,8 @@
 import './App.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import notes from './images/notes.png';
-import Header from './components/header/Header';
-import Footer from './components/footer/Footer';
+import Features from './components/features/Features';
+import Filtering from './components/filtering/Filtering';
 import Task from './components/task/Task';
 
 
@@ -11,21 +11,30 @@ function App() {
 
   const [todos, setTodos] = useState([]);
   const [newTodo, setNewTodo] = useState('');
-  const [stage, setStage] = useState('all');
-  const [type, setType] = useState('green');
+  const [completion, setCompletion] = useState('all');
+  const [type, setType] = useState('all');
+
+  const [completeAll, setCompleteAll] = useState(false);
+  const [clearCompleted, setClearCompleted] = useState(false);
 
 
   const addTodo = (e) => {
     e.preventDefault();
     if (newTodo.trim() === '') return;
 
-    setTodos([...todos, { id: Date.now(), text: newTodo, completion: false, type: 'green' }]);
+    setTodos([...todos, { id: Date.now(), text: newTodo }]);
     setNewTodo('');
   };
 
   const removeTodo = (todoId) => {
     setTodos(todos.filter(todo => todo.id !== todoId));
   };
+
+  useEffect(() => {
+    setTimeout(setCompleteAll(false), 500)
+  }, [completeAll]);
+
+
 
 
   return (
@@ -57,19 +66,19 @@ function App() {
               </form>
             </div>
 
-            <Header todos={todos} setTodos={setTodos}></Header>
+            <Features setCompleteAll={setCompleteAll} setClearCompleted={setClearCompleted}></Features>
           </div>
           <hr className="mt-4" />
 
           {
             todos.map((todo) => (
-              < Task key={todo.id} todos={todos} todo={todo} setTodos={setTodos} removeTodo={removeTodo} stage={stage} ></Task>
+              < Task key={todo.id} todo={todo} removeTodo={removeTodo} type={type} completion={completion} completeAll={completeAll} clearCompleted={clearCompleted} setClearCompleted={setClearCompleted}></Task>
 
             ))}
 
 
           <hr className="mt-4" />
-          <Footer todos={todos} stage={stage} setStage={setStage} type={type} setType={setType} setTodos={setTodos}></Footer>
+          <Filtering length={todos.length} completion={completion} setCompletion={setCompletion} type={type} setType={setType}></Filtering>
 
         </div>
       </div >
