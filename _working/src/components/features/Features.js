@@ -1,7 +1,7 @@
 import React from 'react';
 import doubleTick from '../../images/double-tick.png';
 
-const Features = ({ setCompleteAll, setClearCompleted }) => {
+const Features = () => {
 
    return (
       <div>
@@ -12,9 +12,9 @@ const Features = ({ setCompleteAll, setClearCompleted }) => {
                   src={doubleTick}
                   alt="Complete"
                />
-               <span onClick={() => setCompleteAll(true)}>Complete All Tasks</span>
+               <span>Complete All Tasks</span>
             </li>
-            <li className="cursor-pointer" onClick={() => setClearCompleted(true)}>Clear completed</li>
+            <li className="cursor-pointer">Clear completed</li>
          </ul>
       </div >
    );

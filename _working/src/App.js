@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import notes from './images/notes.png';
 import Features from './components/features/Features';
 import Filtering from './components/filtering/Filtering';
@@ -11,29 +11,26 @@ function App() {
 
   const [todos, setTodos] = useState([]);
   const [newTodo, setNewTodo] = useState('');
-  const [completion, setCompletion] = useState('all');
-  const [type, setType] = useState('all');
+  const [completion, setCompletion] = useState(false);
+  const [redType, setRedType] = useState(false);
+  const [greenType, setGreenType] = useState(false);
+  const [yellowType, setYellowType] = useState(false);
 
-  const [completeAll, setCompleteAll] = useState(false);
-  const [clearCompleted, setClearCompleted] = useState(false);
+  const [filterOne, setFilterOne] = useState(false);
+  const [filterTwo, setFilterTwo] = useState(false);
 
 
   const addTodo = (e) => {
     e.preventDefault();
     if (newTodo.trim() === '') return;
 
-    setTodos([...todos, { id: Date.now(), text: newTodo }]);
+    setTodos([...todos, { id: Date.now(), text: newTodo, completion: false, red: false, green: false, yellow: false }]);
     setNewTodo('');
   };
 
   const removeTodo = (todoId) => {
     setTodos(todos.filter(todo => todo.id !== todoId));
   };
-
-  useEffect(() => {
-    setTimeout(setCompleteAll(false), 500)
-  }, [completeAll]);
-
 
   return (
     <>
@@ -64,19 +61,25 @@ function App() {
               </form>
             </div>
 
-            <Features setCompleteAll={setCompleteAll} setClearCompleted={setClearCompleted}></Features>
+            <Features></Features>
           </div>
           <hr className="mt-4" />
 
           {
             todos.map((todo) => (
-              < Task key={todo.id} todo={todo} removeTodo={removeTodo} type={type} completion={completion} completeAll={completeAll} clearCompleted={clearCompleted} setClearCompleted={setClearCompleted}></Task>
-
-            ))}
+              (!filterOne && !filterTwo) ?
+                <Task key={todo.id} todo={todo} todos={todos} setTodos={setTodos} removeTodo={removeTodo}></Task> :
+                (filterOne && filterTwo) ?
+                  (todo.completion === completion && todo.red === redType && todo.green === greenType && todo.yellow === yellowType && <Task key={todo.id} todo={todo} todos={todos} setTodos={setTodos} removeTodo={removeTodo}></Task>) :
+                  (filterOne) ?
+                    'only filter 1 active' :
+                    'only filter 2 active'
+            ))
+          }
 
 
           <hr className="mt-4" />
-          <Filtering length={todos.length} completion={completion} setCompletion={setCompletion} type={type} setType={setType}></Filtering>
+          <Filtering length={todos.length} completion={completion} setCompletion={setCompletion} redType={redType} setRedType={setRedType} greenType={greenType} setGreenType={setGreenType} yellowType={yellowType} setYellowType={setYellowType} filterOne={filterOne} setFilterOne={setFilterOne} filterTwo={filterTwo} setFilterTwo={setFilterTwo}></Filtering>
 
         </div>
       </div >
