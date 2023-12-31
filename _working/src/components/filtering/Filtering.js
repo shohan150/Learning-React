@@ -1,18 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-const Filtering = ({ length, completion, setCompletion, redType, setRedType, greenType, setGreenType, yellowType, setYellowType, filterOne, setFilterOne, filterTwo, setFilterTwo }) => {
-
-   (redType || greenType || yellowType) ? setFilterTwo(true) : setFilterTwo(false);
+const Filtering = ({ length, completion, setCompletion, redType, setRedType, greenType, setGreenType, yellowType, setYellowType, additionalFilter, setAdditionalFilter }) => {
 
    return (
       <div className="mt-4 flex justify-between text-xs text-gray-500">
          <p>{length} tasks left</p>
          <ul className="flex space-x-1 items-center text-xs">
-            <li className={`cursor-pointer ${!filterOne && 'font-bold'}`} onClick={() => { setFilterOne(false) }}>All</li>
+            <li className={`cursor-pointer ${!additionalFilter && 'font-bold'}`} onClick={() => { setAdditionalFilter(false); console.log(additionalFilter) }}>All</li>
             <li>|</li>
-            <li className={`cursor-pointer ${filterOne && !completion && 'font-bold'}`} onClick={() => { setCompletion(false); setFilterOne(true) }}>Incomplete</li>
+            <li className={`cursor-pointer ${additionalFilter && !completion && 'font-bold'}`} onClick={() => { setCompletion(false); setAdditionalFilter(true); console.log(additionalFilter) }}>Incomplete</li>
             <li>|</li>
-            <li className={`cursor-pointer ${filterOne && completion && 'font-bold'}`} onClick={() => { setCompletion(true); setFilterOne(true) }}>Complete</li>
+            <li className={`cursor-pointer ${additionalFilter && completion && 'font-bold'}`} onClick={() => { setCompletion(true); setAdditionalFilter(true); console.log(additionalFilter) }}>Complete</li>
             <li></li>
             <li></li>
             <li

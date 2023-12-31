@@ -1,7 +1,19 @@
 import React from 'react';
 import doubleTick from '../../images/double-tick.png';
 
-const Features = () => {
+const Features = ({ todos, setTodos }) => {
+
+   const completeAll = () => {
+      const newTodo = [...todos];
+      newTodo.map(todo => todo.completion = true);
+      setTodos(newTodo)
+   }
+
+   const clearCompleted = () => {
+      const newTodo = [...todos];
+      const incompleteTasks = newTodo.filter(todo => !todo.completion);
+      setTodos(incompleteTasks);
+   }
 
    return (
       <div>
@@ -12,9 +24,9 @@ const Features = () => {
                   src={doubleTick}
                   alt="Complete"
                />
-               <span>Complete All Tasks</span>
+               <span onClick={completeAll}>Complete All Tasks</span>
             </li>
-            <li className="cursor-pointer">Clear completed</li>
+            <li className="cursor-pointer" onClick={clearCompleted}>Clear completed</li>
          </ul>
       </div >
    );

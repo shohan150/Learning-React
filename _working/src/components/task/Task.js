@@ -7,9 +7,8 @@ const Task = ({ todo, todos, setTodos, removeTodo }) => {
       const newTodo = [...todos];
       newTodo[indexToUpdate] = todo;
       setTodos(newTodo);
-      console.log(todos)
    }
-
+   // console.log(todo);
    return (
       <>
          <div
