@@ -43,6 +43,10 @@ function App() {
     return (types.red && colors.red === types.red) || (types.green && colors.green === types.green) || (types.yellow && colors.yellow === types.yellow) || (!types.red && !types.green && !types.yellow && true);
   }
 
+  const filteredTodos = todos.filter((todo) => {
+    return (!additionalFilter || (additionalFilter && todo.completion === completion)) && colorMatches(todo);
+  });
+
   return (
     <>
       <div
@@ -77,20 +81,14 @@ function App() {
           <hr className="mt-4" />
 
           {
-            todos.map((todo) => (
-              !additionalFilter ?
-                colorMatches(todo) &&
-                <Task key={todo.id} todo={todo} todos={todos} setTodos={setTodos} removeTodo={removeTodo} />
-                :
-                todo.completion === completion && colorMatches(todo) &&
-                <Task key={todo.id} todo={todo} todos={todos} setTodos={setTodos} removeTodo={removeTodo} />
-
+            filteredTodos.map((todo) => (
+              <Task key={todo.id} todo={todo} todos={todos} setTodos={setTodos} removeTodo={removeTodo} />
             ))
           }
 
 
           <hr className="mt-4" />
-          <Filtering length={todos.length} completion={completion} setCompletion={setCompletion} types={types} toggleType={toggleType} additionalFilter={additionalFilter} setAdditionalFilter={setAdditionalFilter}></Filtering>
+          <Filtering todos={todos} completion={completion} setCompletion={setCompletion} types={types} toggleType={toggleType} additionalFilter={additionalFilter} setAdditionalFilter={setAdditionalFilter}></Filtering>
 
         </div>
       </div >

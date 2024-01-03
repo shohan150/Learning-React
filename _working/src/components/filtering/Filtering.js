@@ -1,6 +1,8 @@
 import React from 'react';
 
-const Filtering = ({ length, completion, setCompletion, types, toggleType, additionalFilter, setAdditionalFilter }) => {
+const Filtering = ({ todos, completion, setCompletion, types, toggleType, additionalFilter, setAdditionalFilter }) => {
+
+   const incomplete = todos.filter(todo => !todo.completion);
 
    const handleClick = (color) => {
       toggleType(color);
@@ -8,7 +10,7 @@ const Filtering = ({ length, completion, setCompletion, types, toggleType, addit
 
    return (
       <div className="mt-4 flex justify-between text-xs text-gray-500">
-         <p>{length} tasks left</p>
+         <p>{incomplete.length} tasks left</p>
          <ul className="flex space-x-1 items-center text-xs">
             <li className={`cursor-pointer ${!additionalFilter && 'font-bold'}`} onClick={() => { setAdditionalFilter(false); console.log(additionalFilter) }}>All</li>
             <li>|</li>
