@@ -12,10 +12,9 @@ function App() {
   const [todos, setTodos] = useState([]);
   const [newTodo, setNewTodo] = useState('');
   const [completion, setCompletion] = useState(false);
-  // const [redType, setRedType] = useState(false);
-  // const [greenType, setGreenType] = useState(false);
-  // const [yellowType, setYellowType] = useState(false);
-  const [types, setTypes] = useState({ red: false, green: false, yellow: false });
+  const [redType, setRedType] = useState(false);
+  const [greenType, setGreenType] = useState(false);
+  const [yellowType, setYellowType] = useState(false);
 
   const [additionalFilter, setAdditionalFilter] = useState(false);
 
@@ -32,15 +31,8 @@ function App() {
     setTodos(todos.filter(todo => todo.id !== todoId));
   };
 
-  const toggleType = (color) => {
-    setTypes((prevTypes) => ({
-      ...prevTypes,
-      [color]: !prevTypes[color]
-    }));
-  };
-
   const colorMatches = (colors) => {
-    return (types.red && colors.red === types.red) || (types.green && colors.green === types.green) || (types.yellow && colors.yellow === types.yellow) || (!types.red && !types.green && !types.yellow && true);
+    return (redType && colors.red === redType) || (greenType && colors.green === greenType) || (yellowType && colors.yellow === yellowType) || (!redType && !yellowType && !greenType && true);
   }
 
   return (
@@ -90,7 +82,7 @@ function App() {
 
 
           <hr className="mt-4" />
-          <Filtering length={todos.length} completion={completion} setCompletion={setCompletion} types={types} toggleType={toggleType} additionalFilter={additionalFilter} setAdditionalFilter={setAdditionalFilter}></Filtering>
+          <Filtering length={todos.length} completion={completion} setCompletion={setCompletion} redType={redType} setRedType={setRedType} greenType={greenType} setGreenType={setGreenType} yellowType={yellowType} setYellowType={setYellowType} additionalFilter={additionalFilter} setAdditionalFilter={setAdditionalFilter}></Filtering>
 
         </div>
       </div >

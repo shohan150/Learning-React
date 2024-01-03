@@ -1,10 +1,6 @@
 import React from 'react';
 
-const Filtering = ({ length, completion, setCompletion, types, toggleType, additionalFilter, setAdditionalFilter }) => {
-
-   const handleClick = (color) => {
-      toggleType(color);
-   };
+const Filtering = ({ length, completion, setCompletion, redType, setRedType, greenType, setGreenType, yellowType, setYellowType, additionalFilter, setAdditionalFilter }) => {
 
    return (
       <div className="mt-4 flex justify-between text-xs text-gray-500">
@@ -18,13 +14,13 @@ const Filtering = ({ length, completion, setCompletion, types, toggleType, addit
             <li></li>
             <li></li>
             <li
-               className={`h-3 w-3 border-2 border-green-500 md:hover:bg-green-500 rounded-full cursor-pointer ${types.green && 'bg-green-500'}`} onClick={() => handleClick('green')}
+               className={`h-3 w-3 border-2 border-green-500 md:hover:bg-green-500 rounded-full cursor-pointer ${greenType && 'bg-green-500'}`} onClick={() => { setGreenType(!greenType); }}
             ></li>
             <li
-               className={`h-3 w-3 border-2 border-red-500 md:hover:bg-red-500 rounded-full cursor-pointer ${types.red && 'bg-red-500'}`} onClick={() => handleClick('red')}
+               className={`h-3 w-3 border-2 border-red-500 md:hover:bg-red-500 rounded-full cursor-pointer ${redType && 'bg-red-500'}`} onClick={() => { setRedType(!redType); }}
             ></li>
             <li
-               className={`h-3 w-3 border-2 border-yellow-500 md:hover:bg-yellow-500 rounded-full cursor-pointer ${types.yellow && 'bg-yellow-500'}`} onClick={() => handleClick('yellow')}
+               className={`h-3 w-3 border-2 border-yellow-500 md:hover:bg-yellow-500 rounded-full cursor-pointer ${yellowType && 'bg-yellow-500'}`} onClick={() => { setYellowType(!yellowType); }}
             ></li>
          </ul>
       </div>
