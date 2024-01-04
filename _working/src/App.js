@@ -39,13 +39,13 @@ function App() {
     }));
   };
 
-  const colorMatches = (colors) => {
-    return (types.red && colors.red === types.red) || (types.green && colors.green === types.green) || (types.yellow && colors.yellow === types.yellow) || (!types.red && !types.green && !types.yellow && true);
-  }
+  // const colorMatches = (colors) => {
+  //   return (types.red && colors.red === types.red) || (types.green && colors.green === types.green) || (types.yellow && colors.yellow === types.yellow) || (!types.red && !types.green && !types.yellow && true);
+  // }
 
-  const filteredTodos = todos.filter((todo) => {
-    return (!additionalFilter || (additionalFilter && todo.completion === completion)) && colorMatches(todo);
-  });
+  // const filteredTodos = todos.filter((todo) => {
+  //   return (!additionalFilter || (additionalFilter && todo.completion === completion)) && colorMatches(todo);
+  // });
 
   return (
     <>
@@ -80,11 +80,25 @@ function App() {
           </div>
           <hr className="mt-4" />
 
+          {/* {
+            todos.filter(todo =>
+              (!additionalFilter || (additionalFilter && todo.completion === completion)) && ((types.red && todo.red === types.red) || (types.green && todo.green === types.green) || (types.yellow && todo.yellow === types.yellow) || (!types.red && !types.green && !types.yellow && true))).map(todo =>
+                <Task key={todo.id} todo={todo} todos={todos} setTodos={setTodos} removeTodo={removeTodo} />)
+          } */}
+
           {
+            todos
+              .filter((todo) => (!additionalFilter || todo.completion === completion))
+              .filter((todo) => ((types.red && todo.red === types.red) || (types.green && todo.green === types.green) || (types.yellow && todo.yellow === types.yellow) || (!types.red && !types.green && !types.yellow && true)))
+              .map((todo) => (
+                <Task key={todo.id} todo={todo} todos={todos} setTodos={setTodos} removeTodo={removeTodo} />
+              ))
+          }
+          {/* {
             filteredTodos.map((todo) => (
               <Task key={todo.id} todo={todo} todos={todos} setTodos={setTodos} removeTodo={removeTodo} />
             ))
-          }
+          } */}
 
 
           <hr className="mt-4" />
